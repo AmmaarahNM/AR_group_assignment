@@ -21,17 +21,7 @@ MonoBehaviour:
     m_SerializedTextureGuid:
       m_GuidLow: 8580651354225863957
       m_GuidHigh: 1571195406022013240
-    m_Size: {x: 0.05, y: 0.03561059}
+    m_Size: {x: 0.1, y: 0.07122118}
     m_SpecifySize: 1
     m_Name: Matches1
     m_Texture: {fileID: 2800000, guid: c61b6d1598f1771438f1aab0e501ce15, type: 3}
-  - m_SerializedGuid:
-      m_GuidLow: 5299191049593646838
-      m_GuidHigh: 6641715456166047389
-    m_SerializedTextureGuid:
-      m_GuidLow: 9130118686420740121
-      m_GuidHigh: 10708505372034870443
-    m_Size: {x: 0.1, y: 0.1254902}
-    m_SpecifySize: 1
-    m_Name: vangogh
-    m_Texture: {fileID: 2800000, guid: 6543a819b2927eb4ab2c8057e6409c94, type: 3}
