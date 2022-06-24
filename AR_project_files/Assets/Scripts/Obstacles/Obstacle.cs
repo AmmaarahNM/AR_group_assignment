@@ -4,8 +4,11 @@ public class Obstacle : MonoBehaviour
 {
     [SerializeField] float _speed;
     private Vector3 _movementVector;
+
+    GameManager GameManager;
     private void Start()
     {
+        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _movementVector = -transform.right * _speed;
         Destroy(gameObject, 8f);
     }
@@ -17,6 +20,8 @@ public class Obstacle : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        GameManager.Collided();
         Destroy(gameObject);
+        
     }
 }

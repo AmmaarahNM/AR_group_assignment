@@ -10,6 +10,7 @@ public class ARCarTracker : MonoBehaviour
     //Used to determine which exact image is being tracked to match prefab
     private string _imageName;
 
+    GameManager GameManager;
     //The non-ar camera
     [SerializeField] Camera _normalCam;
     [SerializeField] Camera _arCam;
@@ -22,6 +23,7 @@ public class ARCarTracker : MonoBehaviour
     private void Awake()
     {
         _trackedImageManager = GetComponent<ARTrackedImageManager>();
+        GameManager = FindObjectOfType<GameManager>();
         _trackingSphere.SetActive(false);
     }
 
@@ -77,11 +79,12 @@ public class ARCarTracker : MonoBehaviour
 
         if(_imageName == "")
         {
-
+            //GameManager.carSpawned = false;
         }
         else
         {
             _carGameObjects[0].SetActive(true);
+            GameManager.carSpawned = true;
         }
     }
 }

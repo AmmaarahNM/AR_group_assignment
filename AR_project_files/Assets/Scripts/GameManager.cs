@@ -5,55 +5,114 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public ARTapToPlace ARscript;
-    
-    public Text displayText;
-    public GameObject trackSelectionUI;
-    
-    public GameObject adjustedButton;
+    int countdownTime = 3;
+    public Text countdownDisplay;
+
+    public bool carSpawned;
+    public bool raceTime;
+    public bool gameOver;
+    public GameObject placementUI;
+    public GameObject movementUI;
+    public GameObject raceUI;
+    public GameObject gameOverUI; 
+
+    public CameraShake CameraShake;
+    public AudioSource crash;
+    public Timer Timer;
+    public Text finalTime;
+
+    int health = 3;
+    public GameObject[] healthIcon;
  
     // Start is called before the first frame update
     void Start()
     {
-        
+        carSpawned = false;
+        raceTime = false;
+        gameOver = false;
+        finalTime.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ARscript.placementIndicator.activeSelf == true)
+        placementUI.SetActive(!carSpawned && !gameOver);
+        
+        movementUI.SetActive(carSpawned && !raceTime && !gameOver);
+        
+        if (movementUI.activeSelf == true)
         {
-            displayText.text = "Tap the green circle to generate your track";
+            StartCoroutine(RaceCountdown());
         }
-
-        if (ARscript.objectGenerated)
-        {
-            if (!ARscript.trackAdjusted)
-            {
-                displayText.text = "Rotate and scale your track using two fingers";
-                adjustedButton.SetActive(true);
-            }
-
-            else
-            {
-                displayText.text = "Place your eraser on the starting position";
-                adjustedButton.SetActive(false);
-            }
-        }
-
-
-
-    }
-
-    public void TrackSelection(int track)
-    {
-        ARscript.trackSelected = true;
-        ARscript.trackChosen = track - 1;
-        displayText.text = "Move your phone over a flat surface";
-        trackSelectionUI.SetActive(false);
 
         
+
+
+
+
     }
+
+    /*IEnumerator RaceReady()
+    {
+        yield return new WaitForSeconds(2);
+        raceUI.SetActive(true);
+        StartCoroutine(RaceCountdown());
+        
+        //yield return new WaitForSeconds(1);
+        //raceTime = true;
+        //raceUI.SetActive(false);
+    }*/
+
+    IEnumerator RaceCountdown()
+    {
+        yield return new WaitForSeconds(2);
+        raceUI.SetActive(true);
+
+        while (countdownTime > 0)
+        {
+            countdownDisplay.text = countdownTime.ToString();
+            yield return new WaitForSeconds(1f);
+
+            countdownTime--;
+        }
+
+        countdownDisplay.text = "GO!";
+
+        yield return new WaitForSeconds(1f);
+
+        raceTime = true;
+        raceUI.SetActive(false);
+        Timer.BeginTimer();
+
+    }
+
+    public void Collided()
+    {
+        //CameraShake.ShakeTrigger();
+        health--;
+        healthIcon[health].SetActive(false);
+        crash.Play();
+
+        if (health <= 0)
+        {
+            GameOver();
+        }
+    }
+    public void GameOver()
+    {
+        gameOver = true;
+        Timer.EndTimer();
+        gameOverUI.SetActive(true);
+        finalTime.text = Timer.timeCounter.text;
+        finalTime.enabled = true;
+        Timer.timeCounter.enabled = false;
+
+        //stop timer
+        //audio
+        
+    }
+
+    
 
     
 }

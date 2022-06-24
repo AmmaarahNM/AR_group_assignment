@@ -7,9 +7,12 @@ public class ObstacleController : MonoBehaviour
     [SerializeField] List<ObstacleSpawner> _spawners = new List<ObstacleSpawner>();
     private float _timer;
 
+    GameManager GameManager;
+
     private void Start()
     {
         _timer = Random.Range(0.1f, 5f);
+        GameManager = FindObjectOfType<GameManager>();
     }
 
     private void Update()
@@ -20,6 +23,7 @@ public class ObstacleController : MonoBehaviour
             _timer = Random.Range(1f, 5f);
         }
 
+        if (GameManager.raceTime && !GameManager.gameOver)
         _timer -= 1 * Time.deltaTime;
     }
 
