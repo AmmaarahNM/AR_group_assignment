@@ -10,9 +10,9 @@ public class SceneChanger : MonoBehaviour
         Application.Quit();
     }
 
-    public void Replay()
+    public void ChangeScene(int index)
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(index);
     }
    
 }

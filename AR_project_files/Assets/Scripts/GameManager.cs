@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    int countdownTime = 3;
+    float countdownTime = 3;
     public Text countdownDisplay;
 
     public bool carSpawned;
@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
 
     int health = 3;
     public GameObject[] healthIcon;
+
+    public AudioSource lose;
+
+
  
     // Start is called before the first frame update
     void Start()
@@ -40,9 +44,24 @@ public class GameManager : MonoBehaviour
         
         movementUI.SetActive(carSpawned && !raceTime && !gameOver);
         
-        if (movementUI.activeSelf == true)
+        if (movementUI.activeSelf == true )
         {
+            /*StartCoroutine(RaceUI());
+
+            if (countdownTime > 0 && raceUI.activeSelf == true)
+            {
+                countdownTime -= 1 * Time.deltaTime;
+                countdownDisplay.text = countdownTime.ToString("0");
+            }
+
+            else 
+            {
+                StartCoroutine(RaceCountdown());
+
+            }*/
             StartCoroutine(RaceCountdown());
+            
+
         }
 
         
@@ -50,6 +69,12 @@ public class GameManager : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator RaceUI()
+    {
+        yield return new WaitForSeconds(2);
+        raceUI.SetActive(true);
     }
 
     /*IEnumerator RaceReady()
@@ -88,7 +113,7 @@ public class GameManager : MonoBehaviour
 
     public void Collided()
     {
-        //CameraShake.ShakeTrigger();
+        CameraShake.ShakeTrigger();
         health--;
         healthIcon[health].SetActive(false);
         crash.Play();
@@ -103,13 +128,15 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         Timer.EndTimer();
         gameOverUI.SetActive(true);
+        
         finalTime.text = Timer.timeCounter.text;
         finalTime.enabled = true;
         Timer.timeCounter.enabled = false;
+        lose.Play();
 
         //stop timer
         //audio
-        
+
     }
 
     
