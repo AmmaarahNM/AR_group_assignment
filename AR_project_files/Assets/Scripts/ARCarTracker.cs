@@ -77,13 +77,36 @@ public class ARCarTracker : MonoBehaviour
         _staticGameObjects.transform.position = _trackingSphere.transform.position;
         _staticGameObjects.transform.rotation = _trackingSphere.transform.rotation;
 
-        if(_imageName == "")
+        if(_imageName == "Croxley")
         {
-            //GameManager.carSpawned = false;
+            GameManager.carSpawned = true;
+            _carGameObjects[0].SetActive(false);
+            _carGameObjects[1].SetActive(true);
+            _carGameObjects[2].SetActive(false);
+            _carGameObjects[3].SetActive(false);
+        }
+        else if (_imageName == "Staedtler")
+        {
+            GameManager.carSpawned = true;
+            _carGameObjects[0].SetActive(false);
+            _carGameObjects[1].SetActive(false);
+            _carGameObjects[2].SetActive(true);
+            _carGameObjects[3].SetActive(false);
+        }
+        else if (_imageName == "Pilot")
+        {
+            GameManager.carSpawned = true;
+            _carGameObjects[0].SetActive(false);
+            _carGameObjects[1].SetActive(false);
+            _carGameObjects[2].SetActive(false);
+            _carGameObjects[3].SetActive(true);
         }
         else
         {
             _carGameObjects[0].SetActive(true);
+            _carGameObjects[1].SetActive(false);
+            _carGameObjects[2].SetActive(false);
+            _carGameObjects[3].SetActive(false);
             GameManager.carSpawned = true;
         }
     }
