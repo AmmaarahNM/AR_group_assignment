@@ -71,27 +71,41 @@ public class GameManager : MonoBehaviour
 
     }
 
-    IEnumerator RaceUI()
-    {
-        yield return new WaitForSeconds(2);
-        raceUI.SetActive(true);
-    }
-
-    /*IEnumerator RaceReady()
-    {
-        yield return new WaitForSeconds(2);
-        raceUI.SetActive(true);
-        StartCoroutine(RaceCountdown());
-        
-        //yield return new WaitForSeconds(1);
-        //raceTime = true;
-        //raceUI.SetActive(false);
-    }*/
+    
 
     IEnumerator RaceCountdown()
     {
         yield return new WaitForSeconds(2);
         raceUI.SetActive(true);
+
+        if (countdownTime > 0 && raceUI.activeSelf == true)
+        {
+            countdownTime -= 1 * Time.deltaTime;
+            countdownDisplay.text = countdownTime.ToString("0");
+        }
+
+        else
+        {
+            countdownDisplay.text = "GO!";
+            yield return new WaitForSeconds(0.5f);
+            raceUI.SetActive(false);
+            raceTime = true;
+
+            Timer.BeginTimer();
+        }
+        /*countdownDisplay.text = "3";
+        yield return new WaitForSeconds(1f);
+        countdownDisplay.text = "2";
+        yield return new WaitForSeconds(1f);
+        countdownDisplay.text = "1";
+        yield return new WaitForSeconds(1f);*/
+
+
+        /*for (countdownTime = 3; countdownTime > 0; countdownTime--)
+        {
+            countdownDisplay.text = countdownTime.ToString();
+            //yield return new WaitForSeconds(1f);
+        }
 
         while (countdownTime > 0)
         {
@@ -99,15 +113,12 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             countdownTime--;
-        }
+        }*/
 
-        countdownDisplay.text = "GO!";
+        //countdownDisplay.text = "GO!";
+        
+        
 
-        yield return new WaitForSeconds(1f);
-
-        raceTime = true;
-        raceUI.SetActive(false);
-        Timer.BeginTimer();
 
     }
 
